@@ -4,7 +4,7 @@ import Login from './component/Login.jsx';
 import Home from './pages/Home.jsx';
 import Company from './component/CompanyForm .jsx';
 import CompanyList from './component/CompanyList.jsx';
-
+import Footer from './component/Footer.jsx';
 
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
        />
       </Routes>
      </div>
+      <Footer/>
     </div>
   );
 }

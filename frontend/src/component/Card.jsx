@@ -8,10 +8,10 @@ const Card = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting); 
+         setIsVisible(entry.isIntersecting);
       },
       {
-        threshold: 0.5,
+        threshold: 0.15,
       }
     );
 
@@ -27,11 +27,11 @@ const Card = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className='flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-10 mt-5 mb-[15px] bg-gray-200'>
+    <div ref={containerRef} className='flex flex-wrap cursor-pointer justify-center gap-6 md:gap-8 lg:gap-10 mt-5 mb-[15px] bg-gray-200'>
        {imageData.map((item , index) => (
           <div 
            key={index}
-           className={`w-[220px] md:w-[250px] lg:w-[290px]  rounded-[10px] overflow-hidden shadow-lg text-center 
+           className={`w-[220px] md:w-[250px] lg:w-[290px]  rounded-[10px] overflow-hidden  shadow-lg text-center 
             transform transition duration-500 ease-in-out 
             ${isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"}`}
           >

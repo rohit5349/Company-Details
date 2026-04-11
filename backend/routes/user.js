@@ -15,6 +15,7 @@ router.get('/' , (req , res)=>{
 
 router.get("/:id" , getUser);
 router.put("/:id" , UpdateUser);
+router.patch("/:id" , UpdateUser);
 router.delete("/:id" , deleteUser)
 
 export default router;
