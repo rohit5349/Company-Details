@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json());
 
 app.use(cors({
-  origin: "https://company-details-iota.vercel.app/",  
+  origin: "https://company-details-iota.vercel.app",  
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
