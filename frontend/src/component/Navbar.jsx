@@ -117,10 +117,12 @@ const Navbar = () => {
                             {link.name}
                         </a>
                     ))}
-
-                    <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-                        New Launch
+                    
+                  <Link to='/company'>
+                    <button onClick={() => setIsMenuOpen(false)} className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+                        Add Company
                     </button>
+                  </Link>
 
                     {user ? (
                        <>
@@ -137,7 +139,7 @@ const Navbar = () => {
                        </>
                        ) : (
                          <Link to="/login">
-                           <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
+                           <button onClick={() => setIsMenuOpen(false)} className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
                              Login
                            </button>
                          </Link>
