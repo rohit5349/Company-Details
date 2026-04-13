@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Navigate , useNavigate} from "react-router-dom";
 
 const CompanyForm = () => {
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
      companyname : "",
@@ -37,6 +39,8 @@ const CompanyForm = () => {
            withCredentials: true 
         });
       alert("Data send Successfully.");
+      navigate('/');
+
     } catch (error) {
 
        if(error.response?.status === 409){
