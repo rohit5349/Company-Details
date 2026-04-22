@@ -1,253 +1,187 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
+import React, {useState , useEffect} from 'react';
+import axios from 'axios';
+import Edit from './Edit.jsx';
 
-// const CompanyList = ({ onEdit }) => {
-//   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-//   const [companies, setCompanies] = useState([]);
+export const CompanyList = () => {
 
-//   const fetchCompanies = async () => {
-//      if(localStorage.getItem("isLoggedIn") !== "true"){
-//         alert("You must be logged in to add a company.");
-//         return;
-//     }
-
-//     try {
-//       const res = await axios.get(`${backendUrl}/backend/company`, {
-//         withCredentials: true,
-//       });
-//       setCompanies(res.data);
-//     } catch (error) {
-//       console.error("Error fetching companies:", error);
-//     }
-//   };
-
-//   const handleDelete = async (id) => {
-//      if(localStorage.getItem("isLoggedIn") !== "true"){
-//         alert("You must be logged in to add a company.");
-//         return;
-//     }
-
-//     if (!window.confirm("Are you sure you want to delete this company?")) return;
-
-//     try {
-//       await axios.delete(`${backendUrl}/backend/company/${id}`, {
-//         withCredentials: true,
-//       });
-//       setCompanies((prev) => prev.filter((company) => company._id !== id));
-//     } catch (error) {
-//       console.error("Error deleting company:", error);
-//     }
-//   };
-
-//   const handleUpdate = async (id, updatedData) => {
-//      if(localStorage.getItem("isLoggedIn") !== "true"){
-//         alert("You must be logged in to add a company.");
-//         return;
-//     }
-
-//     try {
-//       const res = await axios.put(
-//         `${backendUrl}/backend/company/${id}`,
-//         updatedData,
-//         { withCredentials: true }
-//       );
-
-//       setCompanies((prev) =>
-//         prev.map((company) => (company._id === id ? res.data : company))
-//       );
-
-//       alert("Company updated successfully!");
-//     } catch (error) {
-//       console.error("Error updating company:", error);
-//       alert(error.response?.data?.message || "Failed to update company");
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchCompanies();
-//   }, []);
-
-//   return (
-//     <div className="p-6">
-//       <h2 className="text-xl font-bold mb-4">Company List</h2>
-//       <table className="w-full border">
-//         <thead>
-//           <tr className="bg-gray-100">
-//             <th className="p-2">Company Name</th>
-//             <th className="p-2">Industry</th>
-//             <th className="p-2">Founded Year</th>
-//             <th className="p-2">Headquarters</th>
-//             <th className="p-2">No. of Employees</th>
-//             <th className="p-2">Revenue</th>
-//             <th className="p-2">Description</th>
-//             <th className="p-2">Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {companies.map((company) => (
-//             <tr key={company._id} className="border">
-//               <td className="p-2">{company.companyname}</td>
-//               <td className="p-2">{company.industry}</td>
-//               <td className="p-2">{company.founded}</td>
-//               <td className="p-2">{company.headquarters}</td>
-//               <td className="p-2">{company.employees}</td>
-//               <td className="p-2">{company.revenue}</td>
-//               <td className="p-2">{company.description}</td>
-//               <td className="p-2 flex gap-2">
-//                 {onEdit && (
-//                   <button
-//                     onClick={() => onEdit(company, handleUpdate)}
-//                     className="bg-yellow-500 text-white px-3 py-1 rounded"
-//                   >
-//                     Edit
-//                   </button>
-//                 )}
-//                 <button
-//                   onClick={() => handleDelete(company._id)}
-//                   className="bg-red-500 text-white px-3 py-1 rounded"
-//                 >
-//                   Delete
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default CompanyList;
-
-
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Edit from "./Edit.jsx";
-
-const CompanyList = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [companies, setCompanies] = useState([]);
-  const [editingCompany, setEditingCompany] = useState(null); // Track which company is being edited
+
+  const [companies , setCompanies] = useState([]);
+  const [editingCompany , setEditingCompany] = useState(null);
 
   const fetchCompanies = async () => {
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-      alert("You must be logged in to view companies.");
-      return;
-    }
+     if(localStorage.getItem('isLoggedIn') !== 'true'){
+        alert("You must be logged in to view companies.");
+        return;
+     }
 
-    try {
-      const res = await axios.get(`${backendUrl}/backend/company`, {
-        withCredentials: true,
-      });
-      setCompanies(res.data);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    }
+     try {
+        const res = await axios.get(`${backendUrl}/backend/company`, {
+            withCredentials : true,
+        });
+        setCompanies(res.data);
+     } catch (error) {
+       console.error("Error fetching companies:", error);
+     }
   };
 
   const handleDelete = async (id) => {
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-      alert("You must be logged in to delete a company.");
+       if(localStorage.getItem("isLoggedIn") !== "true"){
+          alert("You must be logged in to delete a company.");
+          return;
+       }
+
+    if (!window.confirm("Are you sure you want to delete this company?"))
       return;
-    }
-
-    if (!window.confirm("Are you sure you want to delete this company?")) return;
-
+    
     try {
-      await axios.delete(`${backendUrl}/backend/company/${id}`, {
-        withCredentials: true,
-      });
-      setCompanies((prev) => prev.filter((company) => company._id !== id));
+       await axios.delete(`${backendUrl}/backend/company/${id}`, {
+          withCredentials : true,
+       });
+       
+       setCompanies((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {
-      console.error("Error deleting company:", error);
+       console.error("Delete Error:", error);
     }
   };
 
   const handleUpdate = async (updatedData) => {
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-      alert("You must be logged in to update a company.");
-      return;
-    }
+      try {
+        const res = await axios.put(`${backendUrl}/backend/company/${updatedData._id}`,
+           updatedData,
+           { withCredentials : true }
+        );
 
-    try {
-      const res = await axios.put(
-        `${backendUrl}/backend/company/${updatedData._id}`,
-        updatedData,
-        { withCredentials: true }
-      );
+        setCompanies((prev) => 
+          prev.map((item) => 
+            item._id === updatedData._id ? res.data : item
+         )
+        );
 
-      setCompanies((prev) =>
-        prev.map((company) =>
-          company._id === updatedData._id ? res.data : company
-        )
-      );
-
-      setEditingCompany(null); // close the edit form
-      alert("Company updated successfully!");
-    } catch (error) {
-      console.error("Error updating company:", error);
-      alert(error.response?.data?.message || "Failed to update company");
-    }
+        setEditingCompany(null);
+        alert("Updated Successfully");
+      } catch (error) {
+        console.error(error);
+      }
   };
 
   useEffect(() => {
-    fetchCompanies();
+     fetchCompanies();
   }, []);
 
   return (
-    <div className="p-6 ">
-      <h2 className="text-xl font-bold mb-4">Company List</h2>
+    <div className='min-h-screen bg-gray-100 p-3 sm:p-6'>
+      <div className='max-w-7xl mx-auto bg-white shadow-xl rounded-2xl p-4 sm:p-6 transition-all duration-300'>
+         <h2 className='text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6'>
+           Company List
+         </h2>
+         {editingCompany ? (
+           <Edit
+             savedUser={editingCompany}
+             onUpdate={handleUpdate}
+             onCancel={() => setEditingCompany(null)}
+           />
+         ) : (
+           <>
+            {/* Desktop Table */}
+             <div className='hidden md:block overflow-x-auto rounded-xl border'>
+                 <table className='w-full text-sm'>
+                   <thead>
+                     <tr className='bg-gray-200 text-gray-700'>
+                        <th className='p-3'>Company</th>
+                        <th className='p-3'>Industry</th>
+                        <th className='p-3'>Founded</th>
+                        <th className='p-3'>HQ</th>
+                        <th className='p-3'>Employees</th>
+                        <th className='p-3'>Revenue</th>
+                        <th className='p-3'>Description</th>
+                        <th className='p-3'>Actions</th>
+                     </tr>
+                   </thead>
 
-      {editingCompany ? (
-        <Edit
-          savedUser={editingCompany}
-          onUpdate={handleUpdate}
-          onCancel={() => setEditingCompany(null)}
-        />
-      ) : (
-        <table className="w-full border">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-2">Company Name</th>
-              <th className="p-2">Industry</th>
-              <th className="p-2">Founded Year</th>
-              <th className="p-2">Headquarters</th>
-              <th className="p-2">No. of Employees</th>
-              <th className="p-2">Revenue</th>
-              <th className="p-2">Description</th>
-              <th className="p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {companies.map((company) => (
-              <tr key={company._id} className="border">
-                <td className="p-2">{company.companyname}</td>
-                <td className="p-2">{company.industry}</td>
-                <td className="p-2">{company.founded}</td>
-                <td className="p-2">{company.headquarters}</td>
-                <td className="p-2">{company.employees}</td>
-                <td className="p-2">{company.revenue}</td>
-                <td className="p-2">{company.description}</td>
-                <td className="p-2 flex gap-2">
-                  <button
-                    onClick={() => setEditingCompany(company)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(company._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                   <tbody>
+                     {companies.map((company) => (
+                        <tr
+                         key={company._id}
+                         className='border-t hover:bg-gray-50 transition'
+                        >
+                          <td className='p-3'>{company.companyname}</td>
+                          <td className='p-3'>{company.industry}</td>
+                          <td className='p-3'>{company.founded}</td>
+                          <td className='p-3'>{company.headquarters}</td>
+                          <td className='p-3'>{company.employees}</td>
+                          <td className='p-3'>{company.revenue}</td>
+                          <td className='p-3 max-w-xs truncate'>{company.description}</td>
+
+                          <td className='p-3 flex gap-2'>
+
+                            <button
+                              onClick={() => setEditingCompany(company)}
+                              className='bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg transition'
+                            >
+                              Edit
+                            </button>
+
+                           <button
+                            className='bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition'
+                           >
+                             Delete
+                           </button>
+
+                          </td>
+                         
+                        </tr>
+                     ))}
+                   </tbody>
+                 </table>
+             </div>
+
+              {/* Mobile Cards */}
+
+             <div className='grid gap-4 md:hidden'>
+               {companies.map((company) => (
+                 <div
+                   key={company._id}
+                   className='bg-white border shadow-md rounded-2xl p-4 space-y-2 hover:shadow-lg transition-all duration-300'
+                 >
+                   <h3 className='text-xl font-semibold text-gray-800'>
+                     {company.companyname}
+                   </h3>
+                   
+                   <p><span className='font-medium'>Industry:</span>{company.industry}</p>
+                   <p><span className='font-medium'>Founded:</span>{company.founded}</p>
+                   <p><span className='font-medium'>HQ:</span>{company.headquarters}</p>
+                   <p><span className='font-medium'>Employees:</span>{company.employees}</p>
+                   <p><span className='font-medium'>Revenue:</span>{company.revenue}</p>
+                   <p><span className='font-medium'>Description:</span>{company.description}</p>
+
+                   <div className='flex gap-3 pt-3'>
+                       <button
+                        onClick={() => setEditingCompany(company)}
+                        className='flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-xl transition'
+                       >
+                         Edit
+                       </button>
+
+                       <button
+                        onClick={() => handleDelete(company._id)}
+                        className='flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl transition'
+                       >
+                         Delete
+                       </button>
+                   </div>
+                 </div>
+               ))}
+             </div>
+              
+              {companies.length === 0 && (
+                  <p className="text-center text-gray-500 mt-8">
+                      No companies found.
+                  </p>
+              )}
+           </>
+         )}
+      </div>
     </div>
   );
 };
