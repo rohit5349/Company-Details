@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
        <Navbar/>
-     <div className='min-h-[70vh] pt-24'>
+     <div className='min-h-[70vh] pt-23'>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
