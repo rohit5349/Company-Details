@@ -46,13 +46,13 @@ const CompanyForm = () => {
         {
            withCredentials: true 
         });
-      setMessage("");
-      setTimeout(()=>{
-        setStatus("success");
-        setMessage("Data send Successfully.")
+      
+       setStatus("success");
+       setMessage("Data send Successfully.")
+       
+       setTimeout(()=>{
+           navigate('/');
       },1200);
-
-      navigate('/');
 
     } catch (error) {
 
