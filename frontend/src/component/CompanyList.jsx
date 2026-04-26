@@ -86,7 +86,7 @@ export const CompanyList = () => {
   }, []);
 
   return (
-    <div className='min-h-screen bg-gray-100 p-3 sm:p-6'>
+    <div className='min-h-screen bg-gray-100 p-3 sm:p-6 mt-20'>
       <Popup status={status} message={message}/>
       <div className='max-w-7xl mx-auto bg-white shadow-xl rounded-2xl p-4 sm:p-6 transition-all duration-300'>
          <h2 className='text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6'>
