@@ -70,7 +70,7 @@ const CompanyForm = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-2xl">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-2xl mt-20">
        <Popup status={status} message={message}/>
       <h2 className="text-2xl font-bold mb-4 text-center">Add Company</h2>
 
