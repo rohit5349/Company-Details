@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Navigate , useNavigate} from "react-router-dom";
+import Popup from "./Popup";
 
 const CompanyForm = () => {
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
+  const [status , setStatus] = useState("idle");
+  const [message , setMessage] = useState("");
+
 
   const [formData, setFormData] = useState({
      companyname : "",
@@ -29,7 +33,11 @@ const CompanyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(localStorage.getItem("isLoggedIn") !== "true"){
-        alert("You must be logged in to add a company.");
+        setMessage("");
+        setTimeout(()=>{
+          setStatus("error");
+          setMessage("You must be logged in to add a company.");
+        },1200);
         return;
     }
 
@@ -38,13 +46,22 @@ const CompanyForm = () => {
         {
            withCredentials: true 
         });
-      alert("Data send Successfully.");
+      setMessage("");
+      setTimeout(()=>{
+        setStatus("success");
+        setMessage("Data send Successfully.")
+      },1200);
+
       navigate('/');
 
     } catch (error) {
 
        if(error.response?.status === 409){
-         alert("Company already exists.");
+         setMessage("");
+         setTimeout(()=>{
+           setStatus("error");
+           setMessage("Company already exists.");
+         },1200);
        } else{
            console.error(error);
            alert(error.response?.data?.message || "Data sending failed");
@@ -54,6 +71,7 @@ const CompanyForm = () => {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-2xl">
+       <Popup status={status} message={message}/>
       <h2 className="text-2xl font-bold mb-4 text-center">Add Company</h2>
 
       <form 

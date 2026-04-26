@@ -1,6 +1,7 @@
 import React, {useState , useEffect} from 'react';
 import axios from 'axios';
 import Edit from './Edit.jsx';
+import Popup from './Popup.jsx';
 
 export const CompanyList = () => {
 
@@ -8,10 +9,13 @@ export const CompanyList = () => {
 
   const [companies , setCompanies] = useState([]);
   const [editingCompany , setEditingCompany] = useState(null);
+  const [message , setMessage] = useState("");
+  const [status , setStatus] = useState("idle");
 
   const fetchCompanies = async () => {
      if(localStorage.getItem('isLoggedIn') !== 'true'){
-        alert("You must be logged in to view companies.");
+        setStatus("error");
+        setMessage("You must be logged in to view companies.");
         return;
      }
 
@@ -27,7 +31,8 @@ export const CompanyList = () => {
 
   const handleDelete = async (id) => {
        if(localStorage.getItem("isLoggedIn") !== "true"){
-          alert("You must be logged in to delete a company.");
+          setStatus("error");
+          setMessage("You must be logged in to delete a company.");
           return;
        }
 
@@ -40,6 +45,13 @@ export const CompanyList = () => {
        });
        
        setCompanies((prev) => prev.filter((item) => item._id !== id));
+
+       setMessage("");
+       setTimeout(()=>{
+         setStatus("success");
+         setMessage("Deleted Successfully");
+       },1200);
+
     } catch (error) {
        console.error("Delete Error:", error);
     }
@@ -59,7 +71,11 @@ export const CompanyList = () => {
         );
 
         setEditingCompany(null);
-        alert("Updated Successfully");
+        setMessage("");
+        setTimeout(()=>{
+          setStatus("success");
+          setMessage("Updated Successfully");
+        },1200);
       } catch (error) {
         console.error(error);
       }
@@ -71,6 +87,7 @@ export const CompanyList = () => {
 
   return (
     <div className='min-h-screen bg-gray-100 p-3 sm:p-6'>
+      <Popup status={status} message={message}/>
       <div className='max-w-7xl mx-auto bg-white shadow-xl rounded-2xl p-4 sm:p-6 transition-all duration-300'>
          <h2 className='text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6'>
            Company List

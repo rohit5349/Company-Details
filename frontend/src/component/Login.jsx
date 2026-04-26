@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Popup from './Popup';
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -8,6 +9,8 @@ const Login = () => {
   const [username, setUsername] = useState(""); 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); 
+  const [status , setStatus] = useState("idle");
+  const [message , setMessage] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,16 +25,22 @@ const Login = () => {
       const res = await axios.post(`${backendUrl}/backend/user/login`, { email, password }, { withCredentials: true });
 
       if(res.data?.token){
-          alert("Login successful 🎉");
+          setMessage("Login successful");
+          setStatus("success");
           localStorage.setItem("user", JSON.stringify(res.data.user.username));
           localStorage.setItem("isLoggedIn" , 'true');
-          navigate(from); 
-          window.location.reload();
+         
+          setTimeout(()=>{
+            navigate(from);
+            window.location.reload();
+          },1200);
       }
 
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || "Login failed");
+      console.log(error.response?.data?.message);
+      setMessage("Login Failed");
+      setStatus("error");
     }
   };
 
@@ -39,21 +48,27 @@ const Login = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setMessage("Passwords do not match");
+      setStatus("error");
       return;
     }
     try {
       const res = await axios.post(`${backendUrl}/backend/user/signup`, { username, email, password }, { withCredentials: true });
-      alert("Signup successful 🎉");
-      setIsLogin(true); 
+      setMessage("Signup successful");
+      setStatus("success");
+      setTimeout(()=>{
+         setIsLogin(true);
+      },1200);
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || "Signup failed");
+      setMessage("Signup Failed");
+      setStatus("error");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <Popup status={status} message={message} />
       <form 
         onSubmit={isLogin ? handleLogin : handleSignUp}
         className="max-w-96 w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white shadow-md"
