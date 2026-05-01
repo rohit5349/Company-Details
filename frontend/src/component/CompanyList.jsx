@@ -140,6 +140,7 @@ export const CompanyList = () => {
                             </button>
 
                            <button
+                            onClick={() => handleDelete(company._id)}
                             className='bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition'
                            >
                              Delete
@@ -159,18 +160,39 @@ export const CompanyList = () => {
                {companies.map((company) => (
                  <div
                    key={company._id}
-                   className='bg-white border shadow-md rounded-2xl p-4 space-y-2 hover:shadow-lg transition-all duration-300'
+                   className='bg-white border shadow-md rounded-2xl p-4 space-y-3 hover:shadow-lg transition-all duration-300'
                  >
                    <h3 className='text-xl font-semibold text-gray-800'>
                      {company.companyname}
                    </h3>
                    
-                   <p><span className='font-medium'>Industry:</span>{company.industry}</p>
-                   <p><span className='font-medium'>Founded:</span>{company.founded}</p>
-                   <p><span className='font-medium'>HQ:</span>{company.headquarters}</p>
-                   <p><span className='font-medium'>Employees:</span>{company.employees}</p>
-                   <p><span className='font-medium'>Revenue:</span>{company.revenue}</p>
-                   <p><span className='font-medium'>Description:</span>{company.description}</p>
+                   <div className='grid grid-cols-[110px_10px_1fr] gap-y-1 text-sm'>
+                       
+                       <span className='font-medium'>Industry</span>
+                       <span>:</span>
+                       <span>{company.industry}</span>
+
+                       <span className='font-medium'>Founded</span>
+                       <span>:</span>
+                       <span>{company.founded}</span>
+
+                       <span className='font-medium'>Headquarters</span>
+                       <span>:</span>
+                       <span>{company.headquarters}</span>
+
+                       <span className='font-medium'>Employees</span>
+                       <span>:</span>
+                       <span>{company.employees}</span>
+
+                       <span className='font-medium'>Revenue</span>
+                       <span>:</span>
+                       <span>{company.revenue}</span>
+
+                       <span className='font-medium'>Description</span>
+                       <span>:</span>
+                       <span>{company.description}</span>
+
+                   </div>
 
                    <div className='flex gap-3 pt-3'>
                        <button
